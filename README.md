@@ -6,6 +6,7 @@ This is useful for studying purposes for example, CKA-CKAD-CKS certifications.
 ## Instructions
 
 These are the links to install and create kubernetes cluster:
+
 1. [Install Container runtimes](https://kubernetes.io/docs/setup/production-environment/container-runtimes/)
 2. [Install kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
 3. [Create a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
@@ -16,7 +17,7 @@ Multipass is a tool to launch and manage VMs with a single command. It’s desig
 
 On Linux it’s available as a snap:
 
-``` sh
+```sh
 sudo snap install multipass --beta --classic`
 ```
 
@@ -31,13 +32,14 @@ cd multipass-k8s-labs/
 
 ### Step 3. Create two Ubuntu VMs on you host
 
-``` sh
+```sh
 ./1-multipass-start.sh
 ```
 
 ### Step 4. Creating a cluster
 
-You can override the agents versions with the environment variable: `K8S_VERSION` 
+You can override the agents versions with the environment variable: `K8S_VERSION`
+
 > Default: 1.24.6-00
 
 #### 4.1 Setup control-plane node
@@ -113,4 +115,3 @@ After you complete practice, you can delete the VMs. Assume you are still on the
 ```
 ./destroy.sh
 ```
-

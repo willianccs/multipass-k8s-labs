@@ -47,7 +47,10 @@ sudo apt-get install -y kubelet="${K8S_VERSION}" kubeadm="${K8S_VERSION}" kubect
 sudo apt-mark hold kubelet kubeadm kubectl
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
-
+sleep 5
+# Fix DNS issue: https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/#known-issues
+echo 'KUBELET_EXTRA_ARGS="--resolv-conf=/run/systemd/resolve/resolv.conf"' | sudo tee -a /var/lib/kubelet/kubeadm-flags.env
+sudo systemctl restart kubelet
 
 # For your convenience, the base system and the cluster nodes, have the following additional command-line tools:
 # Install additional command-line tools
@@ -55,8 +58,18 @@ sudo apt-get update && sudo apt-get install -y jq tmux curl wget man
 
 # Autocomplete and alias
 source <(kubectl completion bash)
-echo "source <(kubectl completion bash)" >> ~/.bashrc
-echo "alias k='kubectl'" >> ~/.bashrc
+echo "source <(kubectl completion bash)" >>~/.bashrc
+echo "alias k='kubectl'" >>~/.bashrc
+
+# vimrc
+cat <<EOF | tee $HOME/.vimrc
+set tabstop=2
+set shiftwidth=2
+set expandtab
+syntax on
+filetype indent plugin on
+set ruler
+EOF
 
 # Only control-plane node
 if [[ ! "$(hostname)" =~ "worker" ]]; then
@@ -71,4 +84,3 @@ if [[ ! "$(hostname)" =~ "worker" ]]; then
     #kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
     kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 fi
-

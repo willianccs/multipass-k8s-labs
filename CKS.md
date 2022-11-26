@@ -41,3 +41,7 @@
 
     - Roles (namespace)
     - ClusterRoles (global)
+
+6. PSP (Deprecated)
+
+7. SecurityContext

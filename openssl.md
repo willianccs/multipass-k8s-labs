@@ -1,6 +1,8 @@
 # Create cert (self-signed)
+
 # Choose CN (Common Name)
-openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes -subj "/CN=k8s.wccs.info"
 
 Example:
 
@@ -26,4 +28,3 @@ Organizational Unit Name (eg, section) []:
 Common Name (e.g. server FQDN or YOUR name) []:wccs.info
 Email Address []:me@wccs.info
 ```
-
