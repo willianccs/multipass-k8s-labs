@@ -48,9 +48,6 @@ sudo apt-mark hold kubelet kubeadm kubectl
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
 sleep 5
-# Fix DNS issue: https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/#known-issues
-echo 'KUBELET_EXTRA_ARGS="--resolv-conf=/run/systemd/resolve/resolv.conf"' | sudo tee -a /var/lib/kubelet/kubeadm-flags.env
-sudo systemctl restart kubelet
 
 # For your convenience, the base system and the cluster nodes, have the following additional command-line tools:
 # Install additional command-line tools
@@ -84,3 +81,7 @@ if [[ ! "$(hostname)" =~ "worker" ]]; then
     #kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
     kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 fi
+
+# Fix DNS issue: https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/#known-issues
+echo 'KUBELET_EXTRA_ARGS="--resolv-conf=/run/systemd/resolve/resolv.conf"' | sudo tee -a /var/lib/kubelet/kubeadm-flags.env
+sudo systemctl restart kubelet
